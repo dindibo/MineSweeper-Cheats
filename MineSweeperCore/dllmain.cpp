@@ -4,7 +4,7 @@
 #include <dbghelp.h>
 #include <list>
 
-//#define VERBOSE
+#define VERBOSE
 
 #define CLEAR() system("cls")
 
@@ -211,6 +211,8 @@ void markAllMinesEx(HMODULE hModule) {
 DWORD WINAPI HookGame(HMODULE hModule) {
 #ifdef VERBOSE
 	SpwanConsole();
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 2);
 #endif
 
 	bool threadRun = true;
@@ -234,7 +236,7 @@ DWORD WINAPI HookGame(HMODULE hModule) {
 		updateSize(hSelf);
 
 #ifdef VERBOSE
-		printf("[%p] --> %d\n", g_minesLeft, *g_minesLeft);
+		printf("Mines left: %d\n", *g_minesLeft);
 		std::cout << "Timer: " << (*timer) << std::endl;
 		std::cout << "Size: " << g_size.x << 'x' << g_size.y << std::endl;
 #endif // VERBOSE
